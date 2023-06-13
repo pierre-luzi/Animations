@@ -1,0 +1,113 @@
+ @import url('https://fonts.googleapis.com/css2?family=Boogaloo&family=Calistoga&family=Kalam&family=Quicksand:wght@500&family=Titan+One&display=swap');
+  
+ body {
+    height: calcul(100vh - 10px);
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+}
+
+h1 {
+    margin: 10px 0;
+    padding: 0px 0;
+    text-align: center;
+    font-size: 260%;
+    font-family: 'Boogaloo', cursive;
+}
+
+.row {
+    display: flex;
+}
+
+#zoneCanvas {
+    margin: auto;
+}
+
+#graphes {
+    width: 800px;
+}
+
+#canvasGraphe {
+    position: relative;
+    left: 10px;
+}
+
+#canvasCurseurs {
+    position: relative;
+    left: 10px;
+}
+
+#informations {
+    width: 400px;
+    font: 30px Arial;
+}
+
+#choix_ordre {
+    position: relative;
+    left: 30px;
+    top: 40px;
+}
+
+#titre_ordre {
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 10px;
+}
+
+#inputs_ordre {
+    display: flex;
+    justify-content: space-around;
+    width: 60%;
+}
+
+#inputs_ordre p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+input {
+    margin: 0 10px;
+    vertical-align: middle;
+}
+
+label {
+    font-family: 'Quicksand', sans-serif;
+}
+
+#div_loi_vitesse {
+    position: relative;
+    left: 30px;
+    top: 30px;
+}
+
+#div_loi_vitesse p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#div_loi_concentration {
+    position: relative;
+    left: 30px;
+    top: 100px;
+}
+
+#div_loi_concentration p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+footer {
+    text-align: center;
+}

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Asul:wght@400;700&display=swap" rel="stylesheet">
+    <title>Configuration électronique</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0px;
+            padding: 0px;
+            background: linear-gradient(#FFF, #69C) fixed;
+            font-family: 'Asul', cursive;
+            user-select: none;
+        }
+
+        h1 {
+            margin: 0;
+            padding: 0.2em 0 0 0;
+            text-align: center;
+            font-size: 260%;
+        }
+
+        canvas {
+            display: block;
+            width: 1000px;
+            margin: auto;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0 20px 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <canvas id="canvas" width="2000" height="1400"></canvas>
+    <footer>Réalisé par P. Luzi - Mai 2023 - CC <strong>BY-NC-SA</strong></footer>
+
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script>
+        //==================
+        // Initialisation
+        //==================
+        canvas = document.getElementById("canvas");
+        stage = new createjs.Stage(canvas);
+        stage.enableMouseOver();
+        
+        nombre_electrons = 0;
+        
+        //====================
+        // Titre général
+        //====================
+        titre_general = new createjs.Text("CONFIGURATION ÉLECTRONIQUE DES ATOMES", "bold 84px Asul", "#C00");
+        stage.addChild(titre_general)
+        titre_general.x = 1000;
+        titre_general.y = 20;
+        titre_general.textAlign = "center";
+        titre_general.shadow = new createjs.Shadow("#000000", 3, 3, 8);
+        
+        //===================================================
+        // Conteneur pour la gestion du nombre d'électrons
+        //===================================================
+        container_nombre_electrons = new createjs.Container();
+        stage.addChild(container_nombre_electrons);
+        container_nombre_electrons.x = 50;
+        container_nombre_electrons.y = 160;
+        
+        // Titre "Nombre d'électrons"
+        texte_titre = new createjs.Text("Nombre d'électrons", "bold 60px Asul", "#C00");
+        container_nombre_electrons.addChild(texte_titre);
+        texte_titre.x = 0;
+        texte_titre.y = 25;
+        
+        // Légende
+        texte_legende = new createjs.Text("Augmenter", "bold italic 20px Asul", "#900");
+        container_nombre_electrons.addChild(texte_legende);
+        texte_legende.x = 890;
+        texte_legende.y = 10;
+        
+        texte_legende = new createjs.Text("Diminuer", "bold italic 20px Asul", "#900");
+        container_nombre_electrons.addChild(texte_legende);
+        texte_legende.x = 890;
+        texte_legende.y = 80;
+        
+        // Texte
+        texte_nombre_electrons = new createjs.Text(nombre_electrons, "bold 80px Asul", "#C00");
+        container_nombre_electrons.addChild(texte_nombre_electrons);
+        texte_nombre_electrons.textAlign = "center";
+        texte_nombre_electrons.x = 700;
+        texte_nombre_electrons.y = 20;
+        
+        function affiche_nombre_electrons() {
+            texte_nombre_electrons.text = nombre_electrons;
+        }
+        
+        // Bouton "Augmenter"
+        bouton_augmenter = new createjs.Shape();
+        container_nombre_electrons.addChild(bouton_augmenter);
+        bouton_augmenter.x = 840;
+        bouton_augmenter.y = 20;
+        bouton_augmenter.graphics.setStrokeStyle(2.5, "round").f("#cc0000").mt(0,-25).lt(-50,25).lt(50,25).lt(0,-25).ef();
+        bouton_augmenter.shadow = new createjs.Shadow("#000000", 4, 4, 8);
+        bouton_augmenter.cursor = "pointer";
+        
+        bouton_augmenter.on("mousedown", function (event) {
+            this.y = this.y + 3;
+            this.shadow.offsetY -= 2;
+            stage.update();
+        })
+        
+        bouton_augmenter.on("pressup", function(event) {
+            this.y = this.y - 3;
+            this.shadow.offsetY += 2;
+            stage.update();
+        })
+        
+        bouton_augmenter.on("click", function(event) {
+            nombre_electrons = Math.min(18, nombre_electrons + 1);
+            affiche_nombre_electrons();
+            affiche_texte_config();
+            affiche_electrons();
+        })
+        
+        // Bouton "Diminuer"
+        bouton_diminuer = new createjs.Shape();
+        container_nombre_electrons.addChild(bouton_diminuer);
+        bouton_diminuer.x = 840;
+        bouton_diminuer.y = 90;
+        bouton_diminuer.graphics.setStrokeStyle(2.5, "round").f("#cc0000").mt(0,25).lt(-50,-25).lt(50,-25).lt(0,25).ef();
+        bouton_diminuer.shadow = new createjs.Shadow("#000000", 4, 4, 8);
+        bouton_diminuer.cursor = "pointer";
+        
+        bouton_diminuer.on("mousedown", function(event) {
+            this.y = this.y + 3;
+            this.shadow.offsetY -= 2;
+            stage.update();
+        })
+        
+        bouton_diminuer.on("pressup", function(event) {
+            this.y = this.y - 3;
+            this.shadow.offsetY += 2;
+            stage.update();
+        })
+        
+        bouton_diminuer.on("click", function(event) {
+            nombre_electrons = Math.max(0, nombre_electrons - 1);
+            affiche_nombre_electrons();
+            affiche_texte_config();
+            affiche_electrons();
+        })
+        
+        
+        //==================================
+        // Représentation de l'atome
+        //==================================     
+        const centerX = 1500;
+        const centerY = 600;
+        
+        // Noyau
+        formeNoyau = new createjs.Shape();
+        stage.addChild(formeNoyau);
+        formeNoyau.graphics.beginRadialGradientFill(['#a0a0a0', '#303030'], [0, 1], 0, 0, 0, 0, 0, 100);
+        formeNoyau.graphics.drawCircle(0, 0, 100);
+        formeNoyau.x = centerX;
+        formeNoyau.y = centerY;
+        
+        texteNoyau = new createjs.Text("Noyau", "bold 30px Asul", 'white');
+        stage.addChild(texteNoyau);
+        texteNoyau.textAlign = "center";
+        texteNoyau.x = centerX;
+        texteNoyau.y = centerY - 15;
+        
+        // Électrons
+        sousCouches = [
+            {nom: '1s', contenance: 2, rayon: 150, couleur: 'red'},
+            {nom: '2s', contenance: 2, rayon: 250, couleur: 'blue'},
+            {nom: '2p', contenance: 6, rayon: 300, couleur: 'blue'},
+            {nom: '3s', contenance: 2, rayon: 400, couleur: 'green'},
+            {nom: '3p', contenance: 6, rayon: 450, couleur: 'green'},
+        ]
+        
+        for (sousCouche of sousCouches) {
+            couleur = sousCouche['couleur'];
+            rayon = sousCouche['rayon'];
+            
+            formeSousCouche = new createjs.Shape();
+            stage.addChild(formeSousCouche);
+            formeSousCouche.graphics.beginStroke(couleur);
+            formeSousCouche.graphics.drawCircle(centerX, centerY, rayon);
+            formeSousCouche.graphics.endStroke();
+            
+            texteSousCouche = new createjs.Text(sousCouche['nom'], "bold 25px Asul", couleur);
+            texteSousCouche.x = centerX + (rayon + 20) * Math.cos(-Math.PI/4);
+            texteSousCouche.y = centerY + (rayon + 20) * Math.sin(-Math.PI/4);
+            stage.addChild(texteSousCouche);
+        } 
+
+        containerElectrons = new createjs.Container();
+        stage.addChild(containerElectrons);
+                
+        function affiche_electrons() {
+            electrons = [
+                // 1s
+                ['red', 150, 0],
+                ['red', 150, Math.PI],
+                // 2s
+                ['blue', 250, Math.PI/2],
+                ['blue', 250, -Math.PI/2],
+                // 2p
+                ['blue', 300, 0],
+                ['blue', 300, Math.PI],
+                ['blue', 300, Math.PI/3],
+                ['blue', 300, 4*Math.PI/3],
+                ['blue', 300, 2*Math.PI/3],
+                ['blue', 300, 5*Math.PI/3],
+                // 3s
+                ['green', 400, 0],
+                ['green', 400, Math.PI],
+                // 3p
+                ['green', 450, Math.PI/6],
+                ['green', 450, 7*Math.PI/6],
+                ['green', 450, 3*Math.PI/6],
+                ['green', 450, 9*Math.PI/6],
+                ['green', 450, 5*Math.PI/6],
+                ['green', 450, 11*Math.PI/6],
+            ]
+            
+            containerElectrons.removeAllChildren();
+            reste = nombre_electrons;
+            i = 0
+            while (reste > 0) {
+                formeElectron = new createjs.Shape();
+                containerElectrons.addChild(formeElectron);
+                couleur = electrons[i][0];
+                rayon = electrons[i][1];
+                angle = electrons[i][2];
+                formeElectron.graphics.beginFill(electrons[i][0]);
+                formeElectron.graphics.drawCircle(centerX + rayon * Math.cos(angle), centerY + rayon * Math.sin(angle), 10);
+                formeElectron.graphics.endFill();
+                reste = reste - 1;
+                i++;
+            }
+        }
+        
+        //===================================================
+        // Conteneur pour la configuration électronique
+        //===================================================
+        container_config_electronique = new createjs.Container();
+        stage.addChild(container_config_electronique);
+        container_config_electronique.x = 50;
+        container_config_electronique.y = 300;
+        
+        // Titre "Configuration électronique"
+        titre_config_electronique = new createjs.Text("Configuration électronique", "bold 60px Asul", "#00F");
+        container_config_electronique.addChild(titre_config_electronique);
+        titre_config_electronique.x = 0;
+        titre_config_electronique.y = 25;
+        
+        // Texte
+        texte_config_electronique = new createjs.Text("", "bold 80px Asul", "#00F");
+        container_config_electronique.addChild(texte_config_electronique);
+        texte_config_electronique.textAlign = "left";
+        texte_config_electronique.x = 0;
+        texte_config_electronique.y = 100;
+        
+        function affiche_texte_config() {
+            exposants = ['¹', '²', '³', '⁴', '⁵', '⁶'];
+            texte = "";
+            reste = nombre_electrons;
+            sousCouche = 0;
+            while (reste > 0) {
+                nom = sousCouches[sousCouche]['nom'];
+                contenance = sousCouches[sousCouche]['contenance'];
+                if (reste > contenance) {
+                    texte = texte + nom + exposants[contenance-1];
+                    reste = reste - contenance;
+                } else {
+                    texte = texte + nom + exposants[reste-1];
+                    reste = 0;
+                }
+                texte = texte + " ";
+                sousCouche++;
+            }
+            texte_config_electronique.text = texte;
+        }
+        
+
+        
+            
+        //==================
+        // Initialisation
+        //==================
+        
+        stage.update();
+    </script>
+</body>
+
+</html>

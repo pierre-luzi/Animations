@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<ht
+
+<head>
+    <meta charset="utf-8">
+    <title>Cinétique chimique</title>
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script type="text/javascript" src="https://www.maths.nottingham.ac.uk/plp/pmadw/LaTeXMathML.js"></script>
+    <script defer src="js/script.js"></script>
+</head>
+
+<body>
+    <h1>Évolution de la concentration d'un réactif au cours du temps</h1>
+    <main>
+        <div id="zoneCanvas" class="row">
+            <div id="graphes">
+                <canvas id="canvasGraphe" width="730" height="340" margin="auto"></canvas>
+                <canvas id="canvasCurseurs" width="730" height="150" margin="auto"></canvas>
+            </div>
+            <div id="informations" height=350>
+                <form id="choix_ordre">
+                    <p id="titre_ordre">Ordre de la réaction :</span>
+                    <div id="inputs_ordre">
+                        <p><input name="input_ordre" id="ordre0" value="0" type="radio"/><label for="ordre0">0</label></p>
+                        <p><input name="input_ordre" id="ordre1" value="1" type="radio" checked /><label for="ordre1">1</label></p>
+                        <p><input name="input_ordre" id="ordre2" value="2" type="radio"/><label for="ordre2">2</label></p>
+                    </div>
+                </form>
+                <div id="div_loi_vitesse" width="100%">
+                    <p class="hidden" id="loi_vitesse0">Loi de vitesse : $v = k$</p>
+                    <p class="visible" id="loi_vitesse1">Loi de vitesse : $v = k \times C$</p>
+                    <p class="hidden" id="loi_vitesse2">Loi de vitesse : $v = k \times C^2$</p>
+                </div>
+                <div id="div_loi_concentration" width="100%">
+                    <p class="hidden" id="loi_concentration0">$C(t) = C_0 - k \times t$</p>
+                    <p class="visible" id="loi_concentration1">$C(t) = C_0 \times e^{-k \times t}$</p>
+                    <p class="hidden" id="loi_concentration2">$C(t) = \frac{C_0}{1 + 2 k C_0 t}$</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>Réalisé par P. Luzi - Mai 2023 - CC <strong>BY-NC-SA</strong></footer>
+</body>
+</html>
