@@ -6,6 +6,7 @@
     padding: 0px;
     font-family: 'Quicksand', sans-serif;
     font-weight: 500;
+/*    background: rgba(174, 174, 174, 0.8);*/
 }
 
 h1 {
@@ -16,10 +17,94 @@ h1 {
     font-family: 'Boogaloo', cursive;
 }
 
-#zone-canvas {
+#zoneCanvas {
+    position: relative;
     user-select: none;
 }
 
+#zoneTexte {
+    position: absolute;
+    top: 60px;
+    right: 50px;
+    width: 500px;
+    font-size: 120%;
+}
+
+#consignes {
+    width: 500px;
+}
+
+#validation {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    color: white;
+    border-radius: 5px;
+    background-color: rgba(0, 195, 20, 0.8);
+    padding: 10px;
+    font-size: 80%;
+}
+
+#validation:hover {
+    background-color: green;
+    cursor: pointer;
+}
+
+
+/* Tableau longueur d'ondes */
+#tableau {
+    position: relative;
+    top: 20px;
+    margin: auto;
+}
+
+/*.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}*/
+
+#table_formulaire {
+    border-collapse: collapse;
+}
+
+#table_formulaire td {
+    width: 150px;
+    text-align: center;
+    border: solid black 1px;
+}
+
+/* Inputs */
+#table_formulaire input {
+    width: 100px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.correct {
+	border-color: rgba(68, 191, 68, 0.75);
+}
+
+.correct:focus {
+	border-color: rgba(68, 191, 68, 0.75);
+	box-shadow: 0 0 8px rgba(68, 191, 68, 0.5);
+}
+
+.incorrect {
+	border-color: rgba(191, 68, 68, 0.75);
+}
+
+.incorrect:focus {
+	border-color: rgba(191, 68, 68, 0.75);
+	box-shadow: 0 0 8px rgba(191, 68, 68, 0.5);
+}
+
+
+
+
+/* Pied de page */
 footer {
     text-align: center;
 }

@@ -53,7 +53,7 @@ function ShapeBouton(name, couleur, x, y) {
 function Texte(name, valeur, x, y) {
     /*
         Cette fonction crée une légende pour indiquer, à la position (x, y), la valeur du curseur.
-        La légende a un nombre et une valeur.
+        La légende a un nom et une valeur.
     */
     texte = new createjs.Text(valeur, "20px Quicksand", "#333");
     texte.x = x;
@@ -95,13 +95,18 @@ function maj(bouton) {
 }
 
 function onMouseDown(event) {
+    /*
+        Cette fonction calcule le décalage entre l'objet
+        et la position de l'évènement lors d'un clic.
+    */
     object = event.currentTarget;
     object.offsetX = object.x - event.stageX;
 }
 
 function onPressMove(event) {
     /*
-        Cette fonction met à jour le curseur et les graphes lors du déplacement d'un bouton.
+        Cette fonction met à jour le curseur et
+        les graphes lors du déplacement d'un bouton.
     */
     bouton = event.currentTarget;
     bouton.x = Math.min(Math.max(xminCurseur, event.stageX + bouton.offsetX), xminCurseur+300);
@@ -163,6 +168,10 @@ courbe = new createjs.Shape();
 graphe.addChild(courbe);
 
 function traceCourbe() {
+    /*
+        Cette fonction trace la courbe représentant la concentration
+        du réactif en fonction du temps.
+    */
     courbe.graphics.clear();
     
     let amplitude = concentration_initiale * facteur_concentration;
